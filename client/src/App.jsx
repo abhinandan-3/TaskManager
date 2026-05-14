@@ -84,7 +84,7 @@ function App() {
     try {
 
       const res = await fetch(
-        `http://localhost:5000/api/auth/${endpoint}`,
+        `taskmanager-production-acb6.up.railway.app/api/auth/${endpoint}`,
         {
           method: "POST",
           headers: {
@@ -135,7 +135,7 @@ function App() {
     if (!title) return;
 
     await fetch(
-      "http://localhost:5000/api/tasks",
+      "taskmanager-production-acb6.up.railway.app/api/tasks",
       {
         method: "POST",
         headers: {
@@ -159,7 +159,7 @@ function App() {
   const updateTask = async (id) => {
 
     await fetch(
-      `http://localhost:5000/api/tasks/${id}`,
+      `taskmanager-production-acb6.up.railway.app/api/tasks/${id}`,
       {
         method: "PUT",
         headers: {
@@ -178,7 +178,7 @@ function App() {
   const deleteTask = async (id) => {
 
     await fetch(
-      `http://localhost:5000/api/tasks/${id}`,
+      `taskmanager-production-acb6.up.railway.app/api/tasks/${id}`,
       {
         method: "DELETE",
       }
