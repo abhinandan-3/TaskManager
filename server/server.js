@@ -13,7 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Root route so opening the Railway domain shows a response
 app.get("/", (req, res) => {
   res.send("Task Manager API is running");
 });
@@ -21,12 +20,13 @@ app.get("/", (req, res) => {
 app.use("/api/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
 
-// Database connection using environment variables
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  ssl: { rejectUnauthorized: false }
 });
 
 db.connect((err) => {
@@ -37,9 +37,8 @@ db.connect((err) => {
   }
 });
 
-// Use Railway's assigned port
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
