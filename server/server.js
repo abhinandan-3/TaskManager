@@ -18,17 +18,17 @@ app.get("/", (req, res) => {
   res.send("Task Manager API is running");
 });
 
+// API routes
 app.use("/api/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
 
 // Database connection using environment variables
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  ssl: { rejectUnauthorized: false }
 });
 
 db.connect((err) => {
@@ -42,6 +42,7 @@ db.connect((err) => {
 // Use Railway's assigned port
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, '0.0.0.0', () => {
+// Start server
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });

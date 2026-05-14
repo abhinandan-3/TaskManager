@@ -55,7 +55,7 @@ function App() {
   const fetchTasks = async () => {
 
     const res = await fetch(
-      "http://localhost:5000/api/tasks"
+      "taskmanager-production-acb6.up.railway.app"
     );
 
     const data = await res.json();
