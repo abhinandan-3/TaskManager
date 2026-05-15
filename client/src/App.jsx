@@ -44,6 +44,9 @@ function App() {
   const [role, setRole] =
     useState("Member");
 
+  const API =
+    "https://taskmanager-production-acb6.up.railway.app";
+
   useEffect(() => {
 
     if (loggedIn) {
@@ -55,10 +58,11 @@ function App() {
   const fetchTasks = async () => {
 
     const res = await fetch(
-      "taskmanager-production-acb6.up.railway.app"
+      `${API}/api/tasks`
     );
 
-    const data = await res.json();
+    const data =
+      await res.json();
 
     setTasks(data);
   };
@@ -84,7 +88,7 @@ function App() {
     try {
 
       const res = await fetch(
-        `taskmanager-production-acb6.up.railway.app/api/auth/${endpoint}`,
+        `${API}/api/auth/${endpoint}`,
         {
           method: "POST",
           headers: {
@@ -135,7 +139,7 @@ function App() {
     if (!title) return;
 
     await fetch(
-      "taskmanager-production-acb6.up.railway.app/api/tasks",
+      `${API}/api/tasks`,
       {
         method: "POST",
         headers: {
@@ -159,7 +163,7 @@ function App() {
   const updateTask = async (id) => {
 
     await fetch(
-      `taskmanager-production-acb6.up.railway.app/api/tasks/${id}`,
+      `${API}/api/tasks/${id}`,
       {
         method: "PUT",
         headers: {
@@ -178,7 +182,7 @@ function App() {
   const deleteTask = async (id) => {
 
     await fetch(
-      `taskmanager-production-acb6.up.railway.app/api/tasks/${id}`,
+      `${API}/api/tasks/${id}`,
       {
         method: "DELETE",
       }
@@ -416,202 +420,6 @@ function App() {
 
           <div className="bg-blue-600 px-5 py-2 rounded-xl">
             Role: {localStorage.getItem("role")}
-          </div>
-
-        </div>
-
-        <div className="grid grid-cols-4 gap-6 mb-10">
-
-          <div className="bg-slate-800 p-6 rounded-2xl">
-
-            <h2>Total Tasks</h2>
-
-            <p className="text-4xl font-bold mt-3">
-              {tasks.length}
-            </p>
-
-          </div>
-
-          <div className="bg-green-600 p-6 rounded-2xl">
-
-            <h2>Completed</h2>
-
-            <p className="text-4xl font-bold mt-3">
-              {completedTasks}
-            </p>
-
-          </div>
-
-          <div className="bg-yellow-500 p-6 rounded-2xl">
-
-            <h2>Pending</h2>
-
-            <p className="text-4xl font-bold mt-3">
-              {pendingTasks}
-            </p>
-
-          </div>
-
-          <div className="bg-red-600 p-6 rounded-2xl">
-
-            <h2>Overdue</h2>
-
-            <p className="text-4xl font-bold mt-3">
-              {overdueTasks}
-            </p>
-
-          </div>
-
-        </div>
-
-        <div className="grid grid-cols-2 gap-6 mb-10">
-
-          <div className="bg-slate-800 p-6 rounded-2xl">
-
-            <h2 className="text-2xl font-bold mb-6">
-              Add Task
-            </h2>
-
-            <div className="flex gap-4">
-
-              <input
-                type="text"
-                placeholder="Enter task"
-                value={title}
-                onChange={(e) =>
-                  setTitle(
-                    e.target.value
-                  )
-                }
-                className="bg-slate-700 p-3 rounded-xl flex-1 outline-none"
-              />
-
-              <button
-                onClick={addTask}
-                className="bg-blue-600 px-6 rounded-xl hover:bg-blue-700"
-              >
-                Add
-              </button>
-
-            </div>
-
-          </div>
-
-          <div className="bg-slate-800 p-6 rounded-2xl">
-
-            <h2 className="text-2xl font-bold mb-6">
-              Task Analytics
-            </h2>
-
-            <div className="h-56">
-
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
-              >
-
-                <PieChart>
-
-                  <Pie
-                    data={chartData}
-                    dataKey="value"
-                    outerRadius={80}
-                  >
-
-                    {chartData.map(
-                      (
-                        entry,
-                        index
-                      ) => (
-                        <Cell
-                          key={index}
-                          fill={
-                            COLORS[
-                              index
-                            ]
-                          }
-                        />
-                      )
-                    )}
-
-                  </Pie>
-
-                  <Tooltip />
-
-                </PieChart>
-
-              </ResponsiveContainer>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div className="bg-slate-800 p-6 rounded-2xl">
-
-          <h2 className="text-2xl font-bold mb-6">
-            Task List
-          </h2>
-
-          <div className="space-y-4">
-
-            {tasks.map((task) => (
-
-              <div
-                key={task.id}
-                className="bg-slate-700 p-5 rounded-xl flex justify-between items-center"
-              >
-
-                <div>
-
-                  <h2 className="text-xl font-semibold">
-                    {task.title}
-                  </h2>
-
-                  <p className="text-sm text-slate-300">
-                    Status:
-                    {" "}
-                    {task.status}
-                  </p>
-
-                  <p className="text-sm text-slate-300">
-                    Due:
-                    {" "}
-                    {task.due_date}
-                  </p>
-
-                </div>
-
-                <div className="flex gap-3">
-
-                  <button
-                    onClick={() =>
-                      updateTask(
-                        task.id
-                      )
-                    }
-                    className="bg-green-600 px-4 py-2 rounded-lg"
-                  >
-                    Complete
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      deleteTask(
-                        task.id
-                      )
-                    }
-                    className="bg-red-600 px-4 py-2 rounded-lg"
-                  >
-                    Delete
-                  </button>
-
-                </div>
-
-              </div>
-            ))}
-
           </div>
 
         </div>
