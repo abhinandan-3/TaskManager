@@ -17,6 +17,23 @@ const db = mysql.createConnection({
   },
 });
 
+db.connect((err) => {
+
+  if (err) {
+
+    console.log(
+      "DB ERROR:",
+      err
+    );
+
+  } else {
+
+    console.log(
+      "MySQL Connected"
+    );
+  }
+});
+
 router.get("/", (req, res) => {
 
   db.query(
@@ -24,10 +41,12 @@ router.get("/", (req, res) => {
     (err, result) => {
 
       if (err) {
+
         console.log(err);
 
         return res.status(500).json({
-          message: "Server Error",
+          message:
+            "Server Error",
         });
       }
 
@@ -45,8 +64,11 @@ router.post("/", (req, res) => {
     due_date,
   } = req.body;
 
+  const sql =
+    "INSERT INTO tasks (title, assigned_to, project_id, due_date) VALUES (?, ?, ?, ?)";
+
   db.query(
-    "INSERT INTO tasks (title, assigned_to, project_id, due_date) VALUES (?, ?, ?, ?)",
+    sql,
     [
       title,
       assigned_to,
@@ -56,15 +78,18 @@ router.post("/", (req, res) => {
     (err, result) => {
 
       if (err) {
+
         console.log(err);
 
         return res.status(500).json({
-          message: "Server Error",
+          message:
+            "Server Error",
         });
       }
 
       res.json({
-        message: "Task Added",
+        message:
+          "Task Added",
       });
     }
   );
@@ -72,23 +97,30 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
 
-  const { status } = req.body;
+  const { status } =
+    req.body;
 
   db.query(
     "UPDATE tasks SET status=? WHERE id=?",
-    [status, req.params.id],
+    [
+      status,
+      req.params.id,
+    ],
     (err, result) => {
 
       if (err) {
+
         console.log(err);
 
         return res.status(500).json({
-          message: "Server Error",
+          message:
+            "Server Error",
         });
       }
 
       res.json({
-        message: "Task Updated",
+        message:
+          "Task Updated",
       });
     }
   );
@@ -102,15 +134,18 @@ router.delete("/:id", (req, res) => {
     (err, result) => {
 
       if (err) {
+
         console.log(err);
 
         return res.status(500).json({
-          message: "Server Error",
+          message:
+            "Server Error",
         });
       }
 
       res.json({
-        message: "Task Deleted",
+        message:
+          "Task Deleted",
       });
     }
   );

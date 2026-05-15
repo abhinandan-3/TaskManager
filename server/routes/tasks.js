@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const mysql = require("mysql2");
@@ -23,7 +24,6 @@ router.get("/", (req, res) => {
     (err, result) => {
 
       if (err) {
-
         console.log(err);
 
         return res.status(500).json({
@@ -45,11 +45,8 @@ router.post("/", (req, res) => {
     due_date,
   } = req.body;
 
-  const sql =
-    "INSERT INTO tasks (title, assigned_to, project_id, due_date) VALUES (?, ?, ?, ?)";
-
   db.query(
-    sql,
+    "INSERT INTO tasks (title, assigned_to, project_id, due_date) VALUES (?, ?, ?, ?)",
     [
       title,
       assigned_to,
@@ -59,7 +56,6 @@ router.post("/", (req, res) => {
     (err, result) => {
 
       if (err) {
-
         console.log(err);
 
         return res.status(500).json({
@@ -68,8 +64,7 @@ router.post("/", (req, res) => {
       }
 
       res.json({
-        message:
-          "Task Added",
+        message: "Task Added",
       });
     }
   );
@@ -85,7 +80,6 @@ router.put("/:id", (req, res) => {
     (err, result) => {
 
       if (err) {
-
         console.log(err);
 
         return res.status(500).json({
@@ -94,8 +88,7 @@ router.put("/:id", (req, res) => {
       }
 
       res.json({
-        message:
-          "Task Updated",
+        message: "Task Updated",
       });
     }
   );
@@ -109,7 +102,6 @@ router.delete("/:id", (req, res) => {
     (err, result) => {
 
       if (err) {
-
         console.log(err);
 
         return res.status(500).json({
@@ -118,8 +110,7 @@ router.delete("/:id", (req, res) => {
       }
 
       res.json({
-        message:
-          "Task Deleted",
+        message: "Task Deleted",
       });
     }
   );
